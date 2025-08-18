@@ -1,0 +1,492 @@
+import pandas as pd
+df = pd.read_csv('/content/Processed_data.csv')
+print(df)
+df.head(10)
+
+# Exploratory Data Analysis
+def libraries():
+global pd,np
+import pandas as pd
+import numpy as np
+def load():
+global df
+df=pd.read_csv('/Users/venkatakarthikreddydiukunta/Downloads/FD/Processed_data.csv')
+def top_rows(value):
+print('\033[1m'+ 'displaying the', value,'rows from top'+'\033[0m')
+a=df.head(value)
+print(a,'\n')
+def bottom_rows(value):
+print('\033[1m'+'displaying the', value,'rows from bottom'+'\033[0m')
+b=df.tail(value)
+print(b,'\n')
+def rows_columns():
+print('\033[1m'+'Shape of the Data set'+'\033[0m')
+c=df.shape
+print(c,'\n')
+def col_names():
+print('\033[1m'+'Column Names in the Data set'+'\033[0m')
+d=df.columns
+print(d,'\n')
+def information():
+print('\033[1m'+'Quick Overview of DataSet(info)'+'\033[0m')
+e = df.info()
+print(e,'\n')
+def sizee():
+print('\033[1m'+'No.of Elements in the DataSet'+'\033[0m')
+f = df.size
+print(f,'\n')
+def ndimension():
+print('\033[1m'+'Dimensions in your dataframe'+'\033[0m')
+g = df.ndim
+print(g,'\n')
+def stats_summary():
+print('\033[1m'+'Staistical Summary of DataSet'+'\033[0m')
+h = df.describe()
+print(h,'\n')
+def null_values():
+print('\033[1m'+'Number of Missing values in each column'+'\033[0m')
+i = df.isnull().sum()
+print(i,'\n')
+def n_unique():
+print('\033[1m'+'Number of unique elements'+'\033[0m')
+j = df.nunique()
+print(j,'\n')
+def memory_use():
+print('\033[1m'+'Memory used by all colomns in bytes'+'\033[0m')
+k = df.memory_usage()
+print(k,'\n')
+def is_na(value):
+print('\033[1m'+'Dataframe filled with boolean values with true indicating missing values'+'\03
+3[0m')
+l = df.isna().head(value)
+print(l,'\n')
+def duplicate():
+print('\033[1m'+'Boolean Series denoting duplicate rows'+'\033[0m')
+m = df.duplicated().sum()
+print(m,'\n')
+def valuecounts():
+print('\033[1m'+'Series containing count of unique values'+'\033[0m')
+n = df.value_counts()
+print(n,'\n')
+def datatypes():
+print('\033[1m'+'Datatype of each column'+'\033[0m')
+o = df.dtypes
+print(o,'\n')
+def correlation():
+print('\033[1m'+'Correalation between all columns in DataFrame'+'\033[0m')
+p = df.corr()
+print(p,'\n')
+def nonnull_count():
+print('\033[1m'+'Count of non-null values'+'\033[0m')
+q = df.count()
+print(q,'\n')
+def eda():
+load()
+value= 5
+datatypes()
+top_rows(value)
+bottom_rows(value)
+rows_columns()
+col_names()
+information()
+sizee()
+ndimension()
+stats_summary()
+null_values()
+n_unique()
+memory_use()
+is_na(value)
+nonnull_count()
+duplicate()
+valuecounts()
+correlation()
+def stats_u(data,col):
+if data[col].dtype == "float64":
+print(col,"has Quantitative data")
+mean_value=data[col].mean()
+print('mean of',col,'column',mean_value)
+max_value = data[col].max()
+print('Maximum value of',col,'column',max_value)
+min_value = data[col].min()
+print('Minimum value of',col,'column',min_value)
+median_value = data[col].median(skipna = True)
+print('median of',col,'column',median_value)
+std_value = data[col].std()
+print('standard deviation of',col,'column',std_value)
+q1 = data[col].quantile(0.25,interpolation='nearest')
+print('quartile 1 of',col,'column is',q1)
+q2 = data[col].quantile(0.5,interpolation='nearest')
+print('quartile 2 of',col,'column is',q2)
+q3 = data[col].quantile(0.75,interpolation='nearest')
+print('quartile 3 of',col,'column is',q3)
+q4 = data[col].quantile(1,interpolation='nearest')
+print('quartile 4 of',col,'column is',q4)
+IQR = q3 -q1
+LLP = q1 - 1.5*IQR
+ULP = q3 + 1.5*IQR
+print('Lower Limit Point:',LLP)
+print('Upper Limit Point:',ULP)
+if data[col].min() > LLP and data[col].max() < ULP:
+print("No outliers")
+else:
+print("There are outliers")
+print(data[data[col]<LLP][col])
+print(data[data[col]>ULP][col])
+elif data[col].dtype == "int64":
+print(col,"has Quantitative data")
+mean_value=data[col].mean()
+print('mean of',col,'column',mean_value)
+median_value = data[col].median(skipna = True)
+print('median of',col,'column',median_value)
+std_value = data[col].std()
+print('standard deviation of',col,'column',std_value)
+q1 = data[col].quantile(0.25,interpolation='nearest')
+print('quartile 1 of',col,'column is',q1)
+q2 = data[col].quantile(0.5,interpolation='nearest')
+print('quartile 2 of',col,'column is',q2)
+q3 = data[col].quantile(0.75,interpolation='nearest')
+print('quartile 3 of',col,'column is',q3)
+q4 = data[col].quantile(1,interpolation='nearest')
+print('quartile 4 of',col,'column is',q4)
+IQR = q3 -q1
+LLP = q1 - 1.5*IQR
+ULP = q3 + 1.5*IQR
+print('Lower Limit Point:',LLP)
+print('Upper Limit Point:',ULP)
+if data[col].min() > LLP and data[col].max() < ULP:
+print("No outliers")
+else:
+print("There are outliers")
+print("Outliers are:")
+print(data[data[col]<LLP][col])
+print(data[data[col]>ULP][col])
+else:
+print(col,'has Qualitative Data')
+z = df[col].mode()
+print('mode of',col,'column:\n',z)
+print('Count of mode is:\n',df[col].value_counts())
+print('Unique strings in',col,'are',data[col].nunique())
+if(data[col].nunique() == 1):
+print(col,'has same string')
+elif(data[col].nunique() == 2):
+print(col,'has binary strings')
+else:
+print(col,'has multi stings')
+libraries()
+eda()
+print("-------------------------------------------------------------------------------------------------------------
+---------")
+print('\033[1m'+'Summary Of DataSet'+'\033[0m')
+print('\033[1m'+'DataTypes in the DataSet:\n'+'\033[0m',df.dtypes)
+print('\033[1m'+'Columns in DataSet:'+'\033[0m',df.columns)
+print('\033[1m'+'Shape of DataSet:'+'\033[0m',df.shape)
+print('\033[1m'+'Size of DataSet:'+'\033[0m',df.size)
+print('\033[1m'+'Dimension of DataSet:'+'\033[0m',df.ndim)
+print('\033[1m'+'Total Memory used in DataSet:'+'\033[0m',df.memory_usage().sum())
+print('\033[1m'+'Total Number of missing values in DataSet:'+'\033[0m',df.isnull().sum().sum())
+print('\033[1m'+'Total Number of Unique values in DataSet:'+'\033[0m',df.nunique().sum())
+print('\033[1m'+'Total Number of non null values in DataSet:'+'\033[0m',df.count().sum())
+print('\033[1m'+'Total Number of duplicate rows in DataSet:'+'\033[0m',df.duplicated().sum())
+print("-------------------------------------------------------------------------------------------------------------
+---------")
+print('\033[1m'+'Summary Of Each Colomn'+'\033[0m')
+print("\n")
+cols=df.columns
+cols
+for i in cols:
+print('\033[1m'+i+'\033[0m')
+stats_u(df,i)
+print("\n")
+Training and testing the data
+# X = df.drop(['Unnamed','class'], axis = 1)
+# y = df[['class']]
+X = df.iloc[:, 1:10].values
+y = df.iloc[:, 10].values
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+print(X_train.shape)
+print(X_test.shape)
+#print(y_train.shape)
+#print(y_train.shape)
+df.nunique()/df.shape[0]
+cols = df.columns.tolist()
+cols = cols[0:1]+cols[2:3]+cols[7:8]+cols[3:6]+cols[9:10]+cols[1:2]+cols[6:7]+cols[10:]+cols[8:
+9]
+df = df[cols]
+df.head(10)
+import seaborn as sns
+df.replace({"class":{'YES':0,'NO':1}},inplace=True)
+df['class'].value_counts()
+import seaborn as sns
+sns.countplot(x='class',hue='class',data=df)
+from matplotlib import pyplot as plt
+plt.figure(figsize=(12,12))
+
+sns.heatmap(df.iloc[:, 7:].corr(), annot=True)
+df.describe()
+
+#MACHINE LEARNING MODELS
+pip install imblearn
+df.describe()
+from imblearn import under_sampling, over_sampling
+from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE
+from collections import Counter
+X_resampled, y_resampled = SMOTE().fit_resample(X, y)
+print("Resampled shape of X: ", X_resampled.shape)
+print("Resampled shape of Y: ", y_resampled.shape)
+value_counts = Counter(y_resampled)
+print(value_counts)
+(X_train, X_test, y_train, y_test) = train_test_split(X_resampled, y_resampled, test_size= 0.3, ra
+ndom_state= 42)
+#LOGISTIC REGRESSION
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+lr = LogisticRegression()
+lr.fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+lr_train_acc = accuracy_score(y_train, lr.predict(X_train))
+lr_test_acc = accuracy_score(y_test, y_pred)
+
+print("Training Accuracy of Logistic Regression Model is", lr_train_acc)
+print("Test Accuracy of Logistic Regression Model is", lr_test_acc)
+
+# confusion matrix
+confusion_matrix(y_test, y_pred)
+
+# classification report
+print(classification_report(y_test, y_pred))
+#KNN
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier()
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+knn_train_acc = accuracy_score(y_train, knn.predict(X_train))
+knn_test_acc = accuracy_score(y_test, y_pred)
+print("Training Accuracy of KNN Model is ",knn_train_acc)
+print("Test Accuracy of KNN Model is ",knn_test_acc)
+
+# confusion matrix
+confusion_matrix(y_test, y_pred)
+
+# classification report
+print(classification_report(y_test, y_pred))
+#RANDOM FOREST
+from sklearn.ensemble import RandomForestClassifier
+rand_clf = RandomForestClassifier(criterion = 'gini', max_depth = 3, max_features = 'sqrt', min_
+samples_leaf = 2, min_samples_split = 4, n_estimators = 180)
+rand_clf.fit(X_train, y_train)
+y_pred = rand_clf.predict(X_test)
+rand_clf_train_acc = accuracy_score(y_train, rand_clf.predict(X_train))
+rand_clf_test_acc = accuracy_score(y_test, y_pred)
+print(f"Training Accuracy of Random Forest Model is {rand_clf_train_acc}")
+print(f"Test Accuracy of Random Forest Model is {rand_clf_test_acc}")
+
+#DECISION TREE
+from sklearn.tree import DecisionTreeClassifier
+dtc = DecisionTreeClassifier()
+dtc.fit(X_train, y_train)
+y_pred = dtc.predict(X_test)
+dtc_train_acc = accuracy_score(y_train, dtc.predict(X_train))
+dtc_test_acc = accuracy_score(y_test, y_pred)
+print(f"Training Accuracy of Decision Tree Model is {dtc_train_acc}")
+print(f"Test Accuracy of Decision Tree Model is {dtc_test_acc}")
+
+# confusion matrix
+confusion_matrix(y_test, y_pred)
+
+#XGBOOST
+from xgboost import XGBClassifier
+# fit model no training data
+#model = XGBClassifier()
+#model.fit(X_train, y_train)
+xgb =XGBClassifier()
+xgb.fit(X_train, y_train)
+y_pred = xgb.predict(X_test)
+xgb_train_acc = accuracy_score(y_train, dtc.predict(X_train))
+xgb_test_acc = accuracy_score(y_test, y_pred)
+print(f"Training Accuracy of Decision Tree Model is {dtc_train_acc}")
+print(f"Test Accuracy of Decision Tree Model is {dtc_test_acc}")
+print(xgb)
+models = ['Logistic Regression', 'knn', 'rand_clf', 'dtc', 'xgb']
+scores = [lr_test_acc, knn_test_acc, rand_clf_test_acc, dtc_test_acc, xgb_test_acc]
+models = pd.DataFrame({'Model' : models, 'Score' : scores})
+models.sort_values(by = 'Score', ascending = True)
+plt.figure(figsize = (10, 5))
+sns.barplot(x = 'Model', y = 'Score', data = models)
+plt.show()
+#INTERFACE
+!pip install tk
+from tkinter import *
+root=Tk()
+root.title("Transaction Fraud Detection")
+root.geometry('600x700')
+label1=Label(root,text="User ID :")
+label1.grid(row=0,column=0,padx=5,pady=10)
+entry1=StringVar()
+textbox1=Entry(root,textvariable=entry1)
+textbox1.grid(row=0,column=1)
+label2=Label(root,text="SignUp Time :")
+label2.grid(row=1,column=0,padx=5,pady=10)
+entry2=StringVar()
+textbox2=Entry(root,textvariable=entry2)
+textbox2.grid(row=1,column=1)
+label3=Label(root,text="Purchase Time :")
+label3.grid(row=2,column=0,padx=5,pady=10)
+entry3=StringVar()
+textbox3=Entry(root,textvariable=entry3)
+textbox3.grid(row=2,column=1)
+label4=Label(root,text="Purchase Value :")
+label4.grid(row=3,column=0,padx=5,pady=10)
+entry4=StringVar()
+textbox4=Entry(root,textvariable=entry4)
+textbox4.grid(row=3,column=1)
+# label5=Label(root,text="Device ID :")
+# label5.grid(row=4,column=0,padx=5,pady=10)
+# entry5=StringVar()
+# textbox5=Entry(root,textvariable=entry5)
+# textbox5.grid(row=4,column=1)
+label6=Label(root,text="Source :")
+label6.grid(row=5,column=0,padx=5,pady=10)
+entry6=StringVar()
+textbox6=Entry(root,textvariable=entry6)
+textbox6.grid(row=5,column=1)
+label7=Label(root,text="Browser :")
+label7.grid(row=6,column=0,padx=5,pady=10)
+entry7=StringVar()
+textbox7=Entry(root,textvariable=entry7)
+textbox7.grid(row=6,column=1)
+label8=Label(root,text="Sex :")
+label8.grid(row=7,column=0,padx=5,pady=10)
+entry8=StringVar()
+textbox8=Entry(root,textvariable=entry8)
+textbox8.grid(row=7,column=1)
+label9=Label(root,text="Age :")
+label9.grid(row=8,column=0,padx=5,pady=10)
+entry9=StringVar()
+textbox9=Entry(root,textvariable=entry9)
+textbox9.grid(row=8,column=1)
+label10=Label(root,text="IP Address :")
+label10.grid(row=9,column=0,padx=5,pady=10)
+entry10=StringVar()
+textbox10=Entry(root,textvariable=entry10)
+textbox10.grid(row=9,column=1)
+label11=Label(root,text="Model :")
+label11.grid(row=10,column=0)
+clicked=StringVar()
+clicked.set("Select Model")
+option=OptionMenu(root,clicked,"Model 0","Model 1","Model 2","Model 3","Model 4")
+option.grid(row=10,column=1,pady=10)
+def datetransform(v):
+s=v.replace(" ","")
+k=s.replace(":","")
+p=k.replace("-","")
+return p
+def source(v):
+if v=='SEO':
+return 0
+elif v=='Ads':
+return 1
+
+else:
+return 2
+def browser(v):
+if v=="Chrome":
+return 0
+elif v=="Opera":
+return 1
+elif v=="Safari":
+return 2
+elif v=="IE":
+return 3
+else:
+return 4
+def sex(v):
+if v=="M":
+return 0
+else:
+return 1
+def predict():
+model_no=clicked.get()
+if model_no=="Model 0":
+val=lr.predict(np.array([[entry1.get(),datetransform(entry2.get()),datetransform(entry3.get()
+),entry4.get(),
+source(entry6.get()),browser(entry7.get()),sex(entry8.get()),entry9.get(),entry1
+0.get()]],dtype='f'))
+n=val.copy()
+
+if n==0:
+label=Label(root,text="Transaction is fraud")
+label.grid(row=12,column=1,pady=10)
+else:
+label=Label(root,text="Transaction is valid")
+label.grid(row=12,column=1,pady=10)
+elif model_no=="Model 1":
+val=knn.predict(np.array([[entry1.get(),datetransform(entry2.get()),datetransform(entry3.get
+()),entry4.get(),
+source(entry6.get()),browser(entry7.get()),sex(entry8.get()),entry9.get(),entry1
+0.get()]],dtype='f'))
+n=val.copy()
+if n==0:
+label=Label(root,text="Transaction is fraud")
+label.grid(row=12,column=1,pady=10)
+else:
+label=Label(root,text="Transaction is valid")
+label.grid(row=12,column=1,pady=10)
+elif model_no=="Model 2":
+val=rand_clf.predict([[entry1.get(),datetransform(entry2.get()),datetransform(entry3.get()),e
+ntry4.get(),
+source(entry6.get()),browser(entry7.get()),sex(entry8.get()),entry9.get(),entry1
+0.get()]])
+n=int(val)
+if n==0:
+label=Label(root,text="Transaction is fraud")
+label.grid(row=12,column=1,pady=10)
+else:
+label=Label(root,text="Transaction is valid")
+label.grid(row=12,column=1,pady=10)
+elif model_no=="Model 3":
+val=dtc.predict([[entry1.get(),datetransform(entry2.get()),datetransform(entry3.get()),entry4
+.get(),
+source(entry6.get()),browser(entry7.get()),sex(entry8.get()),entry9.get(),entry10.get()]])
+n=int(val)
+if n==0:
+label=Label(root,text="Transaction is fraud")
+label.grid(row=12,column=1,pady=10)
+else:
+label=Label(root,text="Transaction is valid")
+label.grid(row=12,column=1,pady=10)
+elif model_no=="Model 4":
+val=xgb.predict(np.array([[entry1.get(),datetransform(entry2.get()),datetransform(entry3.get
+()),entry4.get(),
+source(entry6.get()),browser(entry7.get()),sex(entry8.get()),entry9.get(),entry10.get()]]))
+print(type(val))
+n=val.copy()
+if n==0:
+label=Label(root,text="Transaction is fraud")
+label.grid(row=12,column=1,pady=10)
+else:
+label=Label(root,text="Transaction is valid")
+label.grid(row=12,column=1,pady=10)
+button=Button(root,text="Predict",command=predict)
+button.grid(row=11,column=1,pady=10)
+def accuracy():
+model=clicked.get()
+if model=="Model 0":
+label=Label(root,text="Accuracy of Model 0: "+str(lr_test_acc*100)+"%")
+label.grid(row=14,column=1)
+elif model=="Model 1":
+label=Label(root,text="Accuracy of Model 1: "+str(knn_test_acc*100)+"%")
+label.grid(row=14,column=1)
+elif model=="Model 2":
+label=Label(root,text="Accuracy of Model 2: "+str(rand_clf_test_acc*100)+"%")
+label.grid(row=14,column=1)
+elif model=="Model 3":
+label=Label(root,text="Accuracy of Model 3: "+str(dtc_test_acc*100)+"%")
+label.grid(row=14,column=1)
+elif model=="Model 4":
+label=Label(root,text="Accuracy of Model 4: "+str(xgb_test_acc*100)+"%")
+label.grid(row=14,column=1)
+button=Button(root,text="Accuracy",command=accuracy)
+button.grid(row=13,column=1,pady=10)
+root.mainloop()
